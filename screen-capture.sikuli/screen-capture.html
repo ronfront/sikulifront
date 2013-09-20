@@ -1,0 +1,127 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>screen-capture.sikuli</h2> <a href="screen-capture.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="cmt"># NOTE ENSURE DEVELOPER TOOLS ON AND ITS TO MINIMUM SIZE!
+</span><span class="cmt"># functions
+</span>
+<span class="kw">class</span> Chrome:
+    <span class="kw">def</span> __init__(self):
+        <span class="kw">pass</span>
+    <span class="kw">def</span> close_developer_tools(self):
+
+        <span class="kw">if</span> exists():
+            <span class="skw">click</span>()
+
+    <span class="kw">def</span> open_developer_tools_vertical(self):
+        <span class="skw">type</span>(<span class="str">"i"</span>, KeyModifier.CMD + KeyModifier.ALT)
+        <span class="skw">wait</span>()
+        <span class="kw">if</span> exists() <span class="kw">and</span> exists():
+            <span class="skw">click</span>()
+            <span class="skw">wait</span>()
+
+    <span class="kw">def</span> active_incognito(self):
+        <span class="kw">if</span> exists():
+            <span class="skw">click</span>()
+        <span class="kw">elif</span> exists():
+            <span class="skw">click</span>()
+        <span class="kw">else</span>:
+            <span class="skw">click</span>()
+            <span class="skw">type</span>(<span class="str">"n"</span>, KeyModifier.CMD + KeyModifier.SHIFT)
+
+    <span class="kw">def</span> change_url(self, text):
+        <span class="skw">type</span>(<span class="str">"l"</span>, KeyModifier.CMD)
+        <span class="skw">type</span>(text + Key.ENTER)
+        <span class="skw">wait</span>()
+        <span class="skw">wait</span>()
+
+
+<span class="cmt">#  ----------------------------------
+</span>
+chrome = Chrome()
+chrome.active_incognito()
+chrome.close_developer_tools()
+chrome.change_url(<span class="str">"www.google.com"</span>)
+
+
+<span class="kw">for</span> i <span class="kw">in</span> xrange(<span class="dig">4</span>):
+    <span class="skw">type</span>(Key.DOWN, KeyModifier.CMD)
+    <span class="skw">wait</span>(<img src="1379702587714.png" />)
+
+    <span class="skw">type</span>(str(i+<span class="dig">1</span>))
+    <span class="skw">type</span>(Key.ESC)
+
+    <span class="kw">if</span> i == <span class="dig">3</span>:
+        chrome.open_developer_tools_vertical()
+        chrome.close_developer_tools()
+</pre>
+</body>
+</html>
