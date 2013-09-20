@@ -1,6 +1,8 @@
 # NOTE ENSURE DEVELOPER TOOLS ON AND ITS TO MINIMUM SIZE!
 # functions
 
+# force quit = CMD + SHIFT + C
+
 class Chrome:
     def __init__(self):
         pass
