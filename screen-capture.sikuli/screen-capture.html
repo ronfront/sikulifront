@@ -77,31 +77,33 @@
     <span class="kw">def</span> __init__(self):
         <span class="kw">pass</span>
     <span class="kw">def</span> close_developer_tools(self):
+        <span class="kw">if</span> exists(<img src="1379707301383.png" />):
+            <span class="skw">click</span>(Pattern(<img src="1379707301383.png" />).targetOffset(-<span class="dig">35</span>,<span class="dig">0</span>))
 
-        <span class="kw">if</span> exists():
-            <span class="skw">click</span>()
-
-    <span class="kw">def</span> open_developer_tools_vertical(self):
+    <span class="kw">def</span> open_developer_tools(self, orientation=<span class="str">"vertical"</span>):
         <span class="skw">type</span>(<span class="str">"i"</span>, KeyModifier.CMD + KeyModifier.ALT)
-        <span class="skw">wait</span>()
-        <span class="kw">if</span> exists() <span class="kw">and</span> exists():
-            <span class="skw">click</span>()
-            <span class="skw">wait</span>()
+        <span class="skw">wait</span>(<img src="1379707301383.png" />)
+        <span class="kw">if</span> orientation == <span class="str">"vertical"</span> <span class="kw">and</span> exists(Pattern(<img src="1379707392448.png" />).exact()):
+            <span class="skw">click</span>(Pattern(<img src="1379707392448.png" />).exact())
+            <span class="skw">wait</span>(<img src="1379707301383.png" />)
+        <span class="kw">elif</span> orientation == <span class="str">"horizontal"</span> <span class="kw">and</span> exists(Pattern(<img src="1379707984221.png" />).exact()):
+            <span class="skw">click</span>(Pattern(<img src="1379707984221.png" />).exact())
+            <span class="skw">wait</span>(<img src="1379707301383.png" />)
 
     <span class="kw">def</span> active_incognito(self):
-        <span class="kw">if</span> exists():
-            <span class="skw">click</span>()
-        <span class="kw">elif</span> exists():
-            <span class="skw">click</span>()
+        <span class="kw">if</span> exists(<img src="1379707447142.png" />):
+            <span class="skw">click</span>(Pattern(<img src="1379707447142.png" />).targetOffset(<span class="dig">0</span>,-<span class="dig">2</span>))
+        <span class="kw">elif</span> exists(<img src="1379707470322.png" />):
+            <span class="skw">click</span>(<img src="1379707470322.png" />)
         <span class="kw">else</span>:
-            <span class="skw">click</span>()
+            <span class="skw">click</span>(<img src="1379707492167.png" />)
             <span class="skw">type</span>(<span class="str">"n"</span>, KeyModifier.CMD + KeyModifier.SHIFT)
 
     <span class="kw">def</span> change_url(self, text):
         <span class="skw">type</span>(<span class="str">"l"</span>, KeyModifier.CMD)
         <span class="skw">type</span>(text + Key.ENTER)
-        <span class="skw">wait</span>()
-        <span class="skw">wait</span>()
+        <span class="skw">wait</span>(<img src="1379707599945.png" />)
+        <span class="skw">wait</span>(<img src="1379707510263.png" />)
 
 
 <span class="cmt">#  ----------------------------------
@@ -112,6 +114,8 @@ chrome.close_developer_tools()
 chrome.change_url(<span class="str">"www.google.com"</span>)
 
 
+resize = [<img src="1379708197381.png" />, ]
+
 <span class="kw">for</span> i <span class="kw">in</span> xrange(<span class="dig">4</span>):
     <span class="skw">type</span>(Key.DOWN, KeyModifier.CMD)
     <span class="skw">wait</span>(<img src="1379702587714.png" />)
@@ -120,7 +124,7 @@ chrome.change_url(<span class="str">"www.google.com"</span>)
     <span class="skw">type</span>(Key.ESC)
 
     <span class="kw">if</span> i == <span class="dig">3</span>:
-        chrome.open_developer_tools_vertical()
+        chrome.open_developer_tools(orientation=<span class="str">"vertical"</span>)
         chrome.close_developer_tools()
 </pre>
 </body>
