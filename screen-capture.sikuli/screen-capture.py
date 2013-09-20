@@ -3,8 +3,6 @@
 
 # force quit = CMD + SHIFT + C
 
-import time
-
 class Chrome:
     def __init__(self):
         pass
@@ -120,7 +118,6 @@ for resize, platform, ua_menu, ua_sub in resizers:
         type(Key.UP, KeyModifier.CMD)
         wait("1379709490639.png")
         click("1379709478440.png")
-        time.sleep(10)
 
 
         # switch to annotate screens 
