@@ -3,6 +3,8 @@
 
 # force quit = CMD + SHIFT + C
 
+import time
+
 class Chrome:
     def __init__(self):
         pass
@@ -39,6 +41,9 @@ class Chrome:
     def change_url(self, text):
         type("l", KeyModifier.CMD) 
         type(text + Key.ENTER)
+        self.wait_page_load()
+        
+    def wait_page_load(self):
         if exists("1379707599945.png"):
             waitVanish("1379707599945.png")
         wait("1379707510263.png")
@@ -50,12 +55,20 @@ chrome = Chrome()
 platforms_to_fetch = ["desktop", "tabletl", "tabletp", "iphonep"]
 
 sites = [
-    ["http://storefront-staging.herokuapp.com/", "home", "v0"],
-    ["http://storefront-staging.herokuapp.com/about", "about", "v0"],
-    ["http://storefront-staging.herokuapp.com/how-it-works", "how-it-works", "v0"],
-    ["http://storefront-staging.herokuapp.com/contact", "contact", "v0"],
-    ["http://storefront-staging.herokuapp.com/press", "press", "v0"],
-    ["http://storefront-staging.herokuapp.com/team", "team", "v0"]]
+    ["storefront-staging.herokuapp.com/", "home", "v0"],
+#    ["storefront-staging.herokuapp.com/about", "about", "v0"],
+#    ["storefront-staging.herokuapp.com/how-it-works", "how-it-works", "v0"],
+#    ["storefront-staging.herokuapp.com/contact", "contact", "v0"],
+    ["storefront-staging.herokuapp.com/press", "press", "v0"],
+    ["storefront-staging.herokuapp.com/team", "team", "v0"],
+    
+    ["localhost:3000/", "home", "v0"],
+    ["localhost:3000/about", "about", "v0"],
+    ["localhost:3000/how-it-works", "how-it-works", "v0"],
+    ["localhost:3000/contact", "contact", "v0"],
+    ["localhost:3000/press", "press", "v0"],
+    ["localhost:3000/team", "team", "v0"],
+    ]
         
 resizers = [
     ["1379708197381.png", "desktop", "1379714057828.png", "1379714175863.png"], 
@@ -65,36 +78,47 @@ resizers = [
 
 #  ----------------------------------
 
-for url, handle, version in sites:
+for resize, platform, ua_menu, ua_sub in resizers:
+    if platform not in platforms_to_fetch:
+        continue
+    
     chrome.active_incognito()
     chrome.close_developer_tools()
-    chrome.change_url(url)
     
-    for resize, platform in resizers:
-        if platform not in platforms_to_fetch:
-            continue
+    ### hotkey for user agent switcher
+    type(Key.RIGHT, KeyModifier.CMD)
+    click(ua_menu)
+    wait(ua_sub)
+    click(ua_sub)
+    chrome.wait_page_load()
+
+    ### hotkey for window resizer
+    type(Key.DOWN, KeyModifier.CMD)
+    wait("1379716504266.png")
+    click(resize)
+
+    # note iPhone requires a google vertical developer
+    if resize == "1379708612919.png":
+        waitVanish("1379716504266.png")
+        chrome.open_developer_tools(orientation="vertical")
+        click("1379707470322.png")
+
+    #  ----------------------------------
+
+    for url, handle, version in sites:
+        chrome.active_incognito()
+        chrome.change_url(url)
+    
         # use a key based approach
-        # hotkey for window resizer
         saveName = "_".join([handle, platform, version])
-        type(Key.DOWN, KeyModifier.CMD)
-        wait("1379702587714.png")
-    
-        click(resize)
-    
-        # note iPhone requires a google vertical developer
-        if resize == "1379708612919.png":
-            waitVanish("1379702587714.png")
-            chrome.open_developer_tools(orientation="vertical")
-            click("1379712957845.png")
-
-
-
-
-        # hotkey for awesome screenshot (preset as CMD+Up Arrow)
+        
+        ### hotkey for awesome screenshot (preset as CMD+Up Arrow)
         type(Key.UP, KeyModifier.CMD)
         wait("1379709490639.png")
         click("1379709478440.png")
-    
+        time.sleep(10)
+
+
         # switch to annotate screens 
         chrome.active_regular()
     
