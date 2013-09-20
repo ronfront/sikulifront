@@ -45,49 +45,65 @@ class Chrome:
 #  ----------------------------------
 
 chrome = Chrome()
-chrome.active_incognito()
-chrome.close_developer_tools()
-chrome.change_url("www.google.com")
 
+
+
+
+sites = [
+    ["http://storefront-staging.herokuapp.com/", "home", "v0"],
+    ["http://storefront-staging.herokuapp.com/about", "about", "v0"],
+    ["http://storefront-staging.herokuapp.com/how-it-works", "how-it-works", "v0"],
+    ["http://storefront-staging.herokuapp.com/contact", "contact", "v0"],
+    ["http://storefront-staging.herokuapp.com/press", "press", "v0"],
+    ["http://storefront-staging.herokuapp.com/team", "team", "v0"]]
+        
 
 resizers = [
-        ["1379708197381.png", "desktop"], 
-        ["1379708584510.png", "tabletl"],
-        ["1379708595257.png", "tabletp"],
-        ["1379708612919.png", "iphonep"]
-    ]
+    ["1379708197381.png", "desktop"], 
+    ["1379708584510.png", "tabletl"],
+    ["1379708595257.png", "tabletp"],
+    ["1379708612919.png", "iphonep"]]
 
 
-for resize, platform in resizers:
-    # use a key based approach
-    # hotkey for window resizer
-    type(Key.DOWN, KeyModifier.CMD)
-    wait("1379702587714.png")
-
-    click(resize)
-
-    # note iPhone requires a google vertical developer
-    if resize == "1379708612919.png":
-        waitVanish("1379702587714.png")
-        chrome.open_developer_tools(orientation="vertical")
+for url, handle, version in sites:
+    chrome.active_incognito()
+    chrome.close_developer_tools()
+    chrome.change_url(url)
+    
+    for resize, platform in resizers:
+        # use a key based approach
+        # hotkey for window resizer
+        saveName = "_".join([handle, platform, version])
+        type(Key.DOWN, KeyModifier.CMD)
+        wait("1379702587714.png")
+    
+        click(resize)
+    
+        # note iPhone requires a google vertical developer
+        if resize == "1379708612919.png":
+            waitVanish("1379702587714.png")
+            chrome.open_developer_tools(orientation="vertical")
+    
+        # hotkey for awesome screenshot (preset as CMD+Up Arrow)
+        type(Key.UP, KeyModifier.CMD)
+        wait("1379709490639.png")
+        click("1379709478440.png")
+    
+        # switch to annotate screens 
+        chrome.active_regular()
+    
+        wait("1379710431265.png")
+        click("1379710431265.png")
+        click("1379710484223.png")
+        click("1379710540467.png")
+        click(Pattern("1379710582173.png").targetOffset(-21,0))
+        click(Pattern("1379712476524.png").targetOffset(-17,-34))
+        type("a", KeyModifier.CMD)
+        type(Key.DELETE + saveName)
+    
+        click("1379711280407.png")
+        wait("1379711344853.png", 30)        
+        type("w", KeyModifier.CMD)
+        chrome.active_incognito()
         chrome.close_developer_tools()
-
-    # hotkey for awesome screenshot (preset as CMD+Up Arrow)
-    type(Key.UP, KeyModifier.CMD)
-    wait("1379709490639.png")
-    click("1379709478440.png")
-
-    # switch to annotate screens 
-    chrome.active_regular()
-
-    wait("1379710431265.png")
-    click("1379710431265.png")
-    click("1379710484223.png")
-    click("1379710540467.png")
-    click(Pattern("1379710582173.png").targetOffset(-21,0))
-    doubleClick(Pattern("1379710582173.png").targetOffset(-19,-31))
-    type(Key.DELETE + "_" + platform + "_v")
-
-    # type("w", KeyModifier.CMD)
-    # chrome.active_incognito()
-    break
+ 

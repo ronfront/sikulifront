@@ -117,52 +117,67 @@
 <span class="cmt">#  ----------------------------------
 </span>
 chrome = Chrome()
-chrome.active_incognito()
-chrome.close_developer_tools()
-chrome.change_url(<span class="str">"www.google.com"</span>)
+
+
+
+
+sites = [
+    [<span class="str">"http://storefront-staging.herokuapp.com/"</span>, <span class="str">"home"</span>, <span class="str">"v0"</span>],
+    [<span class="str">"http://storefront-staging.herokuapp.com/about"</span>, <span class="str">"about"</span>, <span class="str">"v0"</span>],
+    [<span class="str">"http://storefront-staging.herokuapp.com/how-it-works"</span>, <span class="str">"how-it-works"</span>, <span class="str">"v0"</span>],
+    [<span class="str">"http://storefront-staging.herokuapp.com/contact"</span>, <span class="str">"contact"</span>, <span class="str">"v0"</span>],
+    [<span class="str">"http://storefront-staging.herokuapp.com/press"</span>, <span class="str">"press"</span>, <span class="str">"v0"</span>],
+    [<span class="str">"http://storefront-staging.herokuapp.com/team"</span>, <span class="str">"team"</span>, <span class="str">"v0"</span>]]
 
 
 resizers = [
-        [<img src="1379708197381.png" />, <span class="str">"desktop"</span>],
-        [<img src="1379708584510.png" />, <span class="str">"tabletl"</span>],
-        [<img src="1379708595257.png" />, <span class="str">"tabletp"</span>],
-        [<img src="1379708612919.png" />, <span class="str">"iphonep"</span>]
-    ]
+    [<img src="1379708197381.png" />, <span class="str">"desktop"</span>],
+    [<img src="1379708584510.png" />, <span class="str">"tabletl"</span>],
+    [<img src="1379708595257.png" />, <span class="str">"tabletp"</span>],
+    [<img src="1379708612919.png" />, <span class="str">"iphonep"</span>]]
 
 
-<span class="kw">for</span> resize, platform <span class="kw">in</span> resizers:
-    <span class="cmt"># use a key based approach
-</span>    <span class="cmt"># hotkey for window resizer
-</span>    <span class="skw">type</span>(Key.DOWN, KeyModifier.CMD)
-    <span class="skw">wait</span>(<img src="1379702587714.png" />)
+<span class="kw">for</span> url, handle, version <span class="kw">in</span> sites:
+    chrome.active_incognito()
+    chrome.close_developer_tools()
+    chrome.change_url(url)
 
-    <span class="skw">click</span>(resize)
+    <span class="kw">for</span> resize, platform <span class="kw">in</span> resizers:
+        <span class="cmt"># use a key based approach
+</span>        <span class="cmt"># hotkey for window resizer
+</span>        saveName = <span class="str">"_"</span>.join([handle, platform, version])
+        <span class="skw">type</span>(Key.DOWN, KeyModifier.CMD)
+        <span class="skw">wait</span>(<img src="1379702587714.png" />)
 
-    <span class="cmt"># note iPhone requires a google vertical developer
-</span>    <span class="kw">if</span> resize == <img src="1379708612919.png" />:
-        waitVanish(<img src="1379702587714.png" />)
-        chrome.open_developer_tools(orientation=<span class="str">"vertical"</span>)
+        <span class="skw">click</span>(resize)
+
+        <span class="cmt"># note iPhone requires a google vertical developer
+</span>        <span class="kw">if</span> resize == <img src="1379708612919.png" />:
+            waitVanish(<img src="1379702587714.png" />)
+            chrome.open_developer_tools(orientation=<span class="str">"vertical"</span>)
+
+        <span class="cmt"># hotkey for awesome screenshot (preset as CMD+Up Arrow)
+</span>        <span class="skw">type</span>(Key.UP, KeyModifier.CMD)
+        <span class="skw">wait</span>(<img src="1379709490639.png" />)
+        <span class="skw">click</span>(<img src="1379709478440.png" />)
+
+        <span class="cmt"># switch to annotate screens 
+</span>        chrome.active_regular()
+
+        <span class="skw">wait</span>(<img src="1379710431265.png" />)
+        <span class="skw">click</span>(<img src="1379710431265.png" />)
+        <span class="skw">click</span>(<img src="1379710484223.png" />)
+        <span class="skw">click</span>(<img src="1379710540467.png" />)
+        <span class="skw">click</span>(Pattern(<img src="1379710582173.png" />).targetOffset(-<span class="dig">21</span>,<span class="dig">0</span>))
+        <span class="skw">click</span>(Pattern(<img src="1379712476524.png" />).targetOffset(-<span class="dig">17</span>,-<span class="dig">34</span>))
+        <span class="skw">type</span>(<span class="str">"a"</span>, KeyModifier.CMD)
+        <span class="skw">type</span>(Key.DELETE + saveName)
+
+        <span class="skw">click</span>(<img src="1379711280407.png" />)
+        <span class="skw">wait</span>(<img src="1379711344853.png" />, <span class="dig">30</span>)
+        <span class="skw">type</span>(<span class="str">"w"</span>, KeyModifier.CMD)
+        chrome.active_incognito()
         chrome.close_developer_tools()
-
-    <span class="cmt"># hotkey for awesome screenshot (preset as CMD+Up Arrow)
-</span>    <span class="skw">type</span>(Key.UP, KeyModifier.CMD)
-    <span class="skw">wait</span>(<img src="1379709490639.png" />)
-    <span class="skw">click</span>(<img src="1379709478440.png" />)
-
-    <span class="cmt"># switch to annotate screens 
-</span>    chrome.active_regular()
-
-    <span class="skw">wait</span>(<img src="1379710431265.png" />)
-    <span class="skw">click</span>(<img src="1379710431265.png" />)
-    <span class="skw">click</span>(<img src="1379710484223.png" />)
-    <span class="skw">click</span>(<img src="1379710540467.png" />)
-    <span class="skw">click</span>(Pattern(<img src="1379710582173.png" />).targetOffset(-<span class="dig">21</span>,<span class="dig">0</span>))
-    <span class="skw">doubleClick</span>(Pattern(<img src="1379710582173.png" />).targetOffset(-<span class="dig">19</span>,-<span class="dig">31</span>))
-    <span class="skw">type</span>(Key.DELETE + <span class="str">"_"</span> + platform + <span class="str">"_v"</span>)
-
-    <span class="cmt"># type("w", KeyModifier.CMD)
-</span>    <span class="cmt"># chrome.active_incognito()
-</span>    <span class="kw">break</span>
 </pre>
 </body>
 </html>
