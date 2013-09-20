@@ -85,6 +85,7 @@ for url, handle, version in sites:
         if resize == "1379708612919.png":
             waitVanish("1379702587714.png")
             chrome.open_developer_tools(orientation="vertical")
+            click("1379712957845.png")
     
         # hotkey for awesome screenshot (preset as CMD+Up Arrow)
         type(Key.UP, KeyModifier.CMD)
