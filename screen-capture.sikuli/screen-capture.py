@@ -56,18 +56,22 @@ platforms_to_fetch = ["desktop", "tabletl", "tabletp", "iphonep"]
 
 sites = [
     ["storefront-staging.herokuapp.com/", "home", "v0"],
-#    ["storefront-staging.herokuapp.com/about", "about", "v0"],
-#    ["storefront-staging.herokuapp.com/how-it-works", "how-it-works", "v0"],
-#    ["storefront-staging.herokuapp.com/contact", "contact", "v0"],
+    ["storefront-staging.herokuapp.com/about", "about", "v0"],
+    ["storefront-staging.herokuapp.com/how-it-works", "how-it-works", "v0"],
+    ["storefront-staging.herokuapp.com/contact", "contact", "v0"],
     ["storefront-staging.herokuapp.com/press", "press", "v0"],
     ["storefront-staging.herokuapp.com/team", "team", "v0"],
-    
-    ["localhost:3000/", "home", "v0"],
-    ["localhost:3000/about", "about", "v0"],
-    ["localhost:3000/how-it-works", "how-it-works", "v0"],
-    ["localhost:3000/contact", "contact", "v0"],
-    ["localhost:3000/press", "press", "v0"],
-    ["localhost:3000/team", "team", "v0"],
+    ["storefront-staging.herokuapp.com/properties?address=San%20Francisco,%20CA#/sortField=price&minPrice=0&maxPrice=125000.0&minSize=0&maxSize=50000&mapLat=37.773187224778546&mapLng=-122.41041460000002&priceTypeDay=true&priceTypeWeek=true&priceTypeMonth=true&page=1", "properties", "v0"],
+    ["storefront-staging.herokuapp.com/properties/3927-24th-st-san-francisco-ca-94114-usa", "properties-show", "v0"],
+        
+    ["localhost:3000/", "home", "v1"],
+    ["localhost:3000/about", "about", "v1"],
+    ["localhost:3000/how-it-works", "how-it-works", "v1"],
+    ["localhost:3000/contact", "contact", "v1"],
+    ["localhost:3000/press", "press", "v1"],
+    ["localhost:3000/team", "team", "v1"],
+    ["localhost:3000/properties?address=San%20Francisco,%20CA#/sortField=price&minPrice=0&maxPrice=125000.0&minSize=0&maxSize=50000&mapLat=37.773187224778546&mapLng=-122.41041460000002&priceTypeDay=true&priceTypeWeek=true&priceTypeMonth=true&page=1", "properties", "v1"],
+    ["localhost:3000/properties/3927-24th-st-san-francisco-ca-94114-usa", "properties-show", "v1"],
     ]
         
 resizers = [
