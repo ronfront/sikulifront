@@ -47,9 +47,7 @@ class Chrome:
 #  ----------------------------------
 
 chrome = Chrome()
-
-
-
+platforms_to_fetch = ["desktop", "tabletl", "tabletp", "iphonep"]
 
 sites = [
     ["http://storefront-staging.herokuapp.com/", "home", "v0"],
@@ -59,13 +57,13 @@ sites = [
     ["http://storefront-staging.herokuapp.com/press", "press", "v0"],
     ["http://storefront-staging.herokuapp.com/team", "team", "v0"]]
         
-
 resizers = [
-    ["1379708197381.png", "desktop"], 
-    ["1379708584510.png", "tabletl"],
-    ["1379708595257.png", "tabletp"],
-    ["1379708612919.png", "iphonep"]]
+    ["1379708197381.png", "desktop", "1379714057828.png", "1379714175863.png"], 
+    ["1379708584510.png", "tabletl", "1379714078771.png", "1379714208816.png"],
+    ["1379708595257.png", "tabletp", "1379714078771.png", "1379714208816.png"],
+    ["1379708612919.png", "iphonep", "1379714078771.png", "1379714221797.png"]]
 
+#  ----------------------------------
 
 for url, handle, version in sites:
     chrome.active_incognito()
@@ -73,6 +71,8 @@ for url, handle, version in sites:
     chrome.change_url(url)
     
     for resize, platform in resizers:
+        if platform not in platforms_to_fetch:
+            continue
         # use a key based approach
         # hotkey for window resizer
         saveName = "_".join([handle, platform, version])
@@ -86,7 +86,10 @@ for url, handle, version in sites:
             waitVanish("1379702587714.png")
             chrome.open_developer_tools(orientation="vertical")
             click("1379712957845.png")
-    
+
+
+
+
         # hotkey for awesome screenshot (preset as CMD+Up Arrow)
         type(Key.UP, KeyModifier.CMD)
         wait("1379709490639.png")

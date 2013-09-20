@@ -119,9 +119,7 @@
 <span class="cmt">#  ----------------------------------
 </span>
 chrome = Chrome()
-
-
-
+platforms_to_fetch = [<span class="str">"desktop"</span>, <span class="str">"tabletl"</span>, <span class="str">"tabletp"</span>, <span class="str">"iphonep"</span>]
 
 sites = [
     [<span class="str">"http://storefront-staging.herokuapp.com/"</span>, <span class="str">"home"</span>, <span class="str">"v0"</span>],
@@ -131,20 +129,22 @@ sites = [
     [<span class="str">"http://storefront-staging.herokuapp.com/press"</span>, <span class="str">"press"</span>, <span class="str">"v0"</span>],
     [<span class="str">"http://storefront-staging.herokuapp.com/team"</span>, <span class="str">"team"</span>, <span class="str">"v0"</span>]]
 
-
 resizers = [
-    [<img src="1379708197381.png" />, <span class="str">"desktop"</span>],
-    [<img src="1379708584510.png" />, <span class="str">"tabletl"</span>],
-    [<img src="1379708595257.png" />, <span class="str">"tabletp"</span>],
-    [<img src="1379708612919.png" />, <span class="str">"iphonep"</span>]]
+    [<img src="1379708197381.png" />, <span class="str">"desktop"</span>, <img src="1379714057828.png" />, <img src="1379714175863.png" />],
+    [<img src="1379708584510.png" />, <span class="str">"tabletl"</span>, <img src="1379714078771.png" />, <img src="1379714208816.png" />],
+    [<img src="1379708595257.png" />, <span class="str">"tabletp"</span>, <img src="1379714078771.png" />, <img src="1379714208816.png" />],
+    [<img src="1379708612919.png" />, <span class="str">"iphonep"</span>, <img src="1379714078771.png" />, <img src="1379714221797.png" />]]
 
-
+<span class="cmt">#  ----------------------------------
+</span>
 <span class="kw">for</span> url, handle, version <span class="kw">in</span> sites:
     chrome.active_incognito()
     chrome.close_developer_tools()
     chrome.change_url(url)
 
     <span class="kw">for</span> resize, platform <span class="kw">in</span> resizers:
+        <span class="kw">if</span> platform <span class="kw">not</span> <span class="kw">in</span> platforms_to_fetch:
+            <span class="kw">continue</span>
         <span class="cmt"># use a key based approach
 </span>        <span class="cmt"># hotkey for window resizer
 </span>        saveName = <span class="str">"_"</span>.join([handle, platform, version])
@@ -158,6 +158,9 @@ resizers = [
             waitVanish(<img src="1379702587714.png" />)
             chrome.open_developer_tools(orientation=<span class="str">"vertical"</span>)
             <span class="skw">click</span>(<img src="1379712957845.png" />)
+
+
+
 
         <span class="cmt"># hotkey for awesome screenshot (preset as CMD+Up Arrow)
 </span>        <span class="skw">type</span>(Key.UP, KeyModifier.CMD)
