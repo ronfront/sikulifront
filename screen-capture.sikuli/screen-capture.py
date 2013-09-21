@@ -3,6 +3,7 @@
 
 # force quit = CMD + SHIFT + C
 
+
 class Chrome:
     def __init__(self):
         pass
@@ -46,9 +47,39 @@ class Chrome:
             waitVanish("1379707599945.png")
         wait("1379707510263.png")
 
+#  ----------------------------------
+
+def awesome_screenshot(saveName, mode="full"):
+    # use a key based approach
+    saveName = saveName + "_" + mode
+
+    ### hotkey for awesome screenshot (preset as CMD+Up Arrow)
+    type(Key.UP, KeyModifier.CMD)
+    wait("1379709490639.png")
+    if mode == "full":
+        click("1379709478440.png")
+    elif mode == "screen":
+        click("1379730411669.png")
+
+    # switch to annotate screens 
+    wait(Pattern("1379721262671.png").exact(), 30)
+    chrome.active_regular()
+
+    click("1379710484223.png")
+    click("1379710540467.png")
+    click(Pattern("1379710582173.png").targetOffset(-21,0))
+    click(Pattern("1379712476524.png").targetOffset(-17,-34))
+    type("a", KeyModifier.CMD)
+    type(Key.DELETE + saveName)
+
+    click("1379711280407.png")
+    wait("1379711344853.png", 30)        
+    type("w", KeyModifier.CMD)
+    chrome.active_incognito()
 
 #  ----------------------------------
 
+user_agent_switch = False
 chrome = Chrome()
 platforms_to_fetch = ["desktop", "tabletl", "tabletp", "iphonep"]
 
@@ -88,11 +119,12 @@ for resize, platform, ua_menu, ua_sub in resizers:
     chrome.close_developer_tools()
     
     ### hotkey for user agent switcher
-    type(Key.RIGHT, KeyModifier.CMD)
-    click(ua_menu)
-    wait(ua_sub)
-    click(ua_sub)
-    chrome.wait_page_load()
+    if user_agent_switch:
+        type(Key.RIGHT, KeyModifier.CMD)
+        click(ua_menu)
+        wait(ua_sub)
+        click(ua_sub)
+        chrome.wait_page_load()
 
     ### hotkey for window resizer
     type(Key.DOWN, KeyModifier.CMD)
@@ -108,33 +140,8 @@ for resize, platform, ua_menu, ua_sub in resizers:
     #  ----------------------------------
 
     for url, handle, version in sites:
-        chrome.active_incognito()
         chrome.change_url(url)
-    
-        # use a key based approach
         saveName = "_".join([handle, platform, version])
-        
-        ### hotkey for awesome screenshot (preset as CMD+Up Arrow)
-        type(Key.UP, KeyModifier.CMD)
-        wait("1379709490639.png")
-        click("1379709478440.png")
-
-
-        # switch to annotate screens 
-        chrome.active_regular()
-    
-        wait("1379710431265.png")
-        click("1379710431265.png")
-        click("1379710484223.png")
-        click("1379710540467.png")
-        click(Pattern("1379710582173.png").targetOffset(-21,0))
-        click(Pattern("1379712476524.png").targetOffset(-17,-34))
-        type("a", KeyModifier.CMD)
-        type(Key.DELETE + saveName)
-    
-        click("1379711280407.png")
-        wait("1379711344853.png", 30)        
-        type("w", KeyModifier.CMD)
-        chrome.active_incognito()
-        chrome.close_developer_tools()
+        awesome_screenshot(saveName, "full")
+        awesome_screenshot(saveName, "screen")
  

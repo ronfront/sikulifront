@@ -75,6 +75,7 @@
 </span>
 <span class="cmt"># force quit = CMD + SHIFT + C
 </span>
+
 <span class="kw">class</span> Chrome:
     <span class="kw">def</span> __init__(self):
         <span class="kw">pass</span>
@@ -118,9 +119,39 @@
             waitVanish(<img src="1379707599945.png" />)
         <span class="skw">wait</span>(<img src="1379707510263.png" />)
 
+<span class="cmt">#  ----------------------------------
+</span>
+<span class="kw">def</span> awesome_screenshot(saveName, mode=<span class="str">"full"</span>):
+    <span class="cmt"># use a key based approach
+</span>    saveName = saveName + <span class="str">"_"</span> + mode
+
+    <span class="cmt">### hotkey for awesome screenshot (preset as CMD+Up Arrow)
+</span>    <span class="skw">type</span>(Key.UP, KeyModifier.CMD)
+    <span class="skw">wait</span>(<img src="1379709490639.png" />)
+    <span class="kw">if</span> mode == <span class="str">"full"</span>:
+        <span class="skw">click</span>(<img src="1379709478440.png" />)
+    <span class="kw">elif</span> mode == <span class="str">"screen"</span>:
+        <span class="skw">click</span>(<img src="1379730411669.png" />)
+
+    <span class="cmt"># switch to annotate screens 
+</span>    <span class="skw">wait</span>(Pattern(<img src="1379721262671.png" />).exact(), <span class="dig">30</span>)
+    chrome.active_regular()
+
+    <span class="skw">click</span>(<img src="1379710484223.png" />)
+    <span class="skw">click</span>(<img src="1379710540467.png" />)
+    <span class="skw">click</span>(Pattern(<img src="1379710582173.png" />).targetOffset(-<span class="dig">21</span>,<span class="dig">0</span>))
+    <span class="skw">click</span>(Pattern(<img src="1379712476524.png" />).targetOffset(-<span class="dig">17</span>,-<span class="dig">34</span>))
+    <span class="skw">type</span>(<span class="str">"a"</span>, KeyModifier.CMD)
+    <span class="skw">type</span>(Key.DELETE + saveName)
+
+    <span class="skw">click</span>(<img src="1379711280407.png" />)
+    <span class="skw">wait</span>(<img src="1379711344853.png" />, <span class="dig">30</span>)
+    <span class="skw">type</span>(<span class="str">"w"</span>, KeyModifier.CMD)
+    chrome.active_incognito()
 
 <span class="cmt">#  ----------------------------------
 </span>
+user_agent_switch = False
 chrome = Chrome()
 platforms_to_fetch = [<span class="str">"desktop"</span>, <span class="str">"tabletl"</span>, <span class="str">"tabletp"</span>, <span class="str">"iphonep"</span>]
 
@@ -160,11 +191,12 @@ resizers = [
     chrome.close_developer_tools()
 
     <span class="cmt">### hotkey for user agent switcher
-</span>    <span class="skw">type</span>(Key.RIGHT, KeyModifier.CMD)
-    <span class="skw">click</span>(ua_menu)
-    <span class="skw">wait</span>(ua_sub)
-    <span class="skw">click</span>(ua_sub)
-    chrome.wait_page_load()
+</span>    <span class="kw">if</span> user_agent_switch:
+        <span class="skw">type</span>(Key.RIGHT, KeyModifier.CMD)
+        <span class="skw">click</span>(ua_menu)
+        <span class="skw">wait</span>(ua_sub)
+        <span class="skw">click</span>(ua_sub)
+        chrome.wait_page_load()
 
     <span class="cmt">### hotkey for window resizer
 </span>    <span class="skw">type</span>(Key.DOWN, KeyModifier.CMD)
@@ -180,35 +212,10 @@ resizers = [
     <span class="cmt">#  ----------------------------------
 </span>
     <span class="kw">for</span> url, handle, version <span class="kw">in</span> sites:
-        chrome.active_incognito()
         chrome.change_url(url)
-
-        <span class="cmt"># use a key based approach
-</span>        saveName = <span class="str">"_"</span>.join([handle, platform, version])
-
-        <span class="cmt">### hotkey for awesome screenshot (preset as CMD+Up Arrow)
-</span>        <span class="skw">type</span>(Key.UP, KeyModifier.CMD)
-        <span class="skw">wait</span>(<img src="1379709490639.png" />)
-        <span class="skw">click</span>(<img src="1379709478440.png" />)
-
-
-        <span class="cmt"># switch to annotate screens 
-</span>        chrome.active_regular()
-
-        <span class="skw">wait</span>(<img src="1379710431265.png" />)
-        <span class="skw">click</span>(<img src="1379710431265.png" />)
-        <span class="skw">click</span>(<img src="1379710484223.png" />)
-        <span class="skw">click</span>(<img src="1379710540467.png" />)
-        <span class="skw">click</span>(Pattern(<img src="1379710582173.png" />).targetOffset(-<span class="dig">21</span>,<span class="dig">0</span>))
-        <span class="skw">click</span>(Pattern(<img src="1379712476524.png" />).targetOffset(-<span class="dig">17</span>,-<span class="dig">34</span>))
-        <span class="skw">type</span>(<span class="str">"a"</span>, KeyModifier.CMD)
-        <span class="skw">type</span>(Key.DELETE + saveName)
-
-        <span class="skw">click</span>(<img src="1379711280407.png" />)
-        <span class="skw">wait</span>(<img src="1379711344853.png" />, <span class="dig">30</span>)
-        <span class="skw">type</span>(<span class="str">"w"</span>, KeyModifier.CMD)
-        chrome.active_incognito()
-        chrome.close_developer_tools()
+        saveName = <span class="str">"_"</span>.join([handle, platform, version])
+        awesome_screenshot(saveName, <span class="str">"full"</span>)
+        awesome_screenshot(saveName, <span class="str">"screen"</span>)
 </pre>
 </body>
 </html>
