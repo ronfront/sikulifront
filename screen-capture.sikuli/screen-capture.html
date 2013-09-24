@@ -75,6 +75,8 @@
 </span>
 <span class="cmt"># force quit = CMD + SHIFT + C
 </span>
+<span class="kw">import</span> time
+
 
 <span class="kw">class</span> Chrome:
     <span class="kw">def</span> __init__(self):
@@ -111,6 +113,7 @@
 
     <span class="kw">def</span> change_url(self, text):
         <span class="skw">type</span>(<span class="str">"l"</span>, KeyModifier.CMD)
+        <span class="skw">type</span>(Key.DELETE)
         <span class="skw">type</span>(text + Key.ENTER)
         self.wait_page_load()
 
@@ -134,7 +137,7 @@
         <span class="skw">click</span>(<img src="1379730411669.png" />)
 
     <span class="cmt"># switch to annotate screens 
-</span>    <span class="skw">wait</span>(Pattern(<img src="1379721262671.png" />).exact(), <span class="dig">30</span>)
+</span>    <span class="skw">wait</span>(Pattern(<img src="1379731145373.png" />).exact().targetOffset(-<span class="dig">21</span>,-<span class="dig">53</span>), <span class="dig">30</span>)
     chrome.active_regular()
 
     <span class="skw">click</span>(<img src="1379710484223.png" />)
@@ -154,25 +157,29 @@
 user_agent_switch = False
 chrome = Chrome()
 platforms_to_fetch = [<span class="str">"desktop"</span>, <span class="str">"tabletl"</span>, <span class="str">"tabletp"</span>, <span class="str">"iphonep"</span>]
+platforms_to_fetch = [<span class="str">"desktop"</span>, <span class="str">"tabletl"</span>, <span class="str">"tabletp"</span>, <span class="str">"iphonep"</span>]
+screen_size = [<span class="str">"screen"</span>, <span class="str">"full"</span>]
 
 sites = [
-    [<span class="str">"storefront-staging.herokuapp.com/"</span>, <span class="str">"home"</span>, <span class="str">"v0"</span>],
-    [<span class="str">"storefront-staging.herokuapp.com/about"</span>, <span class="str">"about"</span>, <span class="str">"v0"</span>],
-    [<span class="str">"storefront-staging.herokuapp.com/how-it-works"</span>, <span class="str">"how-it-works"</span>, <span class="str">"v0"</span>],
-    [<span class="str">"storefront-staging.herokuapp.com/contact"</span>, <span class="str">"contact"</span>, <span class="str">"v0"</span>],
-    [<span class="str">"storefront-staging.herokuapp.com/press"</span>, <span class="str">"press"</span>, <span class="str">"v0"</span>],
-    [<span class="str">"storefront-staging.herokuapp.com/team"</span>, <span class="str">"team"</span>, <span class="str">"v0"</span>],
-    [<span class="str">"storefront-staging.herokuapp.com/properties?address=San%20Francisco,%20CA#/sortField=price&amp;minPrice=0&amp;maxPrice=125000.0&amp;minSize=0&amp;maxSize=50000&amp;mapLat=37.773187224778546&amp;mapLng=-122.41041460000002&amp;priceTypeDay=true&amp;priceTypeWeek=true&amp;priceTypeMonth=true&amp;page=1"</span>, <span class="str">"properties"</span>, <span class="str">"v0"</span>],
-    [<span class="str">"storefront-staging.herokuapp.com/properties/3927-24th-st-san-francisco-ca-94114-usa"</span>, <span class="str">"properties-show"</span>, <span class="str">"v0"</span>],
-
-    [<span class="str">"localhost:3000/"</span>, <span class="str">"home"</span>, <span class="str">"v1"</span>],
+<span class="str">"""
+    ["storefront-staging.herokuapp.com/", "home", "v0"],
+    ["storefront-staging.herokuapp.com/about", "about", "v0"],
+    ["storefront-staging.herokuapp.com/how-it-works", "how-it-works", "v0"],
+    ["storefront-staging.herokuapp.com/contact", "contact", "v0"],
+    ["storefront-staging.herokuapp.com/press", "press", "v0"],
+    ["storefront-staging.herokuapp.com/team", "team", "v0"],
+    ["storefront-staging.herokuapp.com/properties?address=San%20Francisco,%20CA#/sortField=price&amp;minPrice=0&amp;maxPrice=125000.0&amp;minSize=0&amp;maxSize=50000&amp;mapLat=37.773187224778546&amp;mapLng=-122.41041460000002&amp;priceTypeDay=true&amp;priceTypeWeek=true&amp;priceTypeMonth=true&amp;page=1", "properties", "v0"],
+    ["storefront-staging.herokuapp.com/properties/3927-24th-st-san-francisco-ca-94114-usa", "properties-show", "v0"],
+        
+    ["localhost:3000/", "home", "v1"],
+    ["localhost:3000/properties?address=San%20Francisco,%20CA#/sortField=price&amp;minPrice=0&amp;maxPrice=125000.0&amp;minSize=0&amp;maxSize=50000&amp;mapLat=37.773187224778546&amp;mapLng=-122.41041460000002&amp;priceTypeDay=true&amp;priceTypeWeek=true&amp;priceTypeMonth=true&amp;page=1", "properties", "v1"],    ["localhost:3000/properties/3927-24th-st-san-francisco-ca-94114-usa", "properties-show", "v1"],
+"""</span>
     [<span class="str">"localhost:3000/about"</span>, <span class="str">"about"</span>, <span class="str">"v1"</span>],
     [<span class="str">"localhost:3000/how-it-works"</span>, <span class="str">"how-it-works"</span>, <span class="str">"v1"</span>],
     [<span class="str">"localhost:3000/contact"</span>, <span class="str">"contact"</span>, <span class="str">"v1"</span>],
     [<span class="str">"localhost:3000/press"</span>, <span class="str">"press"</span>, <span class="str">"v1"</span>],
     [<span class="str">"localhost:3000/team"</span>, <span class="str">"team"</span>, <span class="str">"v1"</span>],
-    [<span class="str">"localhost:3000/properties?address=San%20Francisco,%20CA#/sortField=price&amp;minPrice=0&amp;maxPrice=125000.0&amp;minSize=0&amp;maxSize=50000&amp;mapLat=37.773187224778546&amp;mapLng=-122.41041460000002&amp;priceTypeDay=true&amp;priceTypeWeek=true&amp;priceTypeMonth=true&amp;page=1"</span>, <span class="str">"properties"</span>, <span class="str">"v1"</span>],
-    [<span class="str">"localhost:3000/properties/3927-24th-st-san-francisco-ca-94114-usa"</span>, <span class="str">"properties-show"</span>, <span class="str">"v1"</span>],
+    [<span class="str">"localhost:3000/error_404"</span>, <span class="str">"404"</span>, <span class="str">"v0"</span>],
     ]
 
 resizers = [
@@ -183,12 +190,12 @@ resizers = [
 
 <span class="cmt">#  ----------------------------------
 </span>
+chrome.active_incognito()
+chrome.close_developer_tools()
+
 <span class="kw">for</span> resize, platform, ua_menu, ua_sub <span class="kw">in</span> resizers:
     <span class="kw">if</span> platform <span class="kw">not</span> <span class="kw">in</span> platforms_to_fetch:
         <span class="kw">continue</span>
-
-    chrome.active_incognito()
-    chrome.close_developer_tools()
 
     <span class="cmt">### hotkey for user agent switcher
 </span>    <span class="kw">if</span> user_agent_switch:
@@ -196,7 +203,7 @@ resizers = [
         <span class="skw">click</span>(ua_menu)
         <span class="skw">wait</span>(ua_sub)
         <span class="skw">click</span>(ua_sub)
-        chrome.wait_page_load()
+    chrome.wait_page_load()
 
     <span class="cmt">### hotkey for window resizer
 </span>    <span class="skw">type</span>(Key.DOWN, KeyModifier.CMD)
@@ -209,13 +216,17 @@ resizers = [
         chrome.open_developer_tools(orientation=<span class="str">"vertical"</span>)
         <span class="skw">click</span>(<img src="1379707470322.png" />)
 
+    time.<span class="skw">sleep</span>(<span class="dig">1</span>)
+
     <span class="cmt">#  ----------------------------------
 </span>
     <span class="kw">for</span> url, handle, version <span class="kw">in</span> sites:
         chrome.change_url(url)
         saveName = <span class="str">"_"</span>.join([handle, platform, version])
-        awesome_screenshot(saveName, <span class="str">"full"</span>)
-        awesome_screenshot(saveName, <span class="str">"screen"</span>)
+        <span class="kw">if</span> <span class="str">"full"</span> <span class="kw">in</span> screen_size:
+            awesome_screenshot(saveName, <span class="str">"full"</span>)
+        <span class="kw">if</span> <span class="str">"screen"</span> <span class="kw">in</span> screen_size:
+            awesome_screenshot(saveName, <span class="str">"screen"</span>)
 </pre>
 </body>
 </html>

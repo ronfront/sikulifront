@@ -3,6 +3,8 @@
 
 # force quit = CMD + SHIFT + C
 
+import time
+
 
 class Chrome:
     def __init__(self):
@@ -39,6 +41,7 @@ class Chrome:
 
     def change_url(self, text):
         type("l", KeyModifier.CMD) 
+        type(Key.DELETE)
         type(text + Key.ENTER)
         self.wait_page_load()
         
@@ -62,7 +65,7 @@ def awesome_screenshot(saveName, mode="full"):
         click("1379730411669.png")
 
     # switch to annotate screens 
-    wait(Pattern("1379721262671.png").exact(), 30)
+    wait(Pattern("1379731145373.png").exact().targetOffset(-21,-53), 30)
     chrome.active_regular()
 
     click("1379710484223.png")
@@ -82,8 +85,11 @@ def awesome_screenshot(saveName, mode="full"):
 user_agent_switch = False
 chrome = Chrome()
 platforms_to_fetch = ["desktop", "tabletl", "tabletp", "iphonep"]
+platforms_to_fetch = ["desktop", "tabletl", "tabletp", "iphonep"]
+screen_size = ["screen", "full"]
 
 sites = [
+"""
     ["storefront-staging.herokuapp.com/", "home", "v0"],
     ["storefront-staging.herokuapp.com/about", "about", "v0"],
     ["storefront-staging.herokuapp.com/how-it-works", "how-it-works", "v0"],
@@ -94,13 +100,14 @@ sites = [
     ["storefront-staging.herokuapp.com/properties/3927-24th-st-san-francisco-ca-94114-usa", "properties-show", "v0"],
         
     ["localhost:3000/", "home", "v1"],
+    ["localhost:3000/properties?address=San%20Francisco,%20CA#/sortField=price&minPrice=0&maxPrice=125000.0&minSize=0&maxSize=50000&mapLat=37.773187224778546&mapLng=-122.41041460000002&priceTypeDay=true&priceTypeWeek=true&priceTypeMonth=true&page=1", "properties", "v1"],    ["localhost:3000/properties/3927-24th-st-san-francisco-ca-94114-usa", "properties-show", "v1"],
+"""
     ["localhost:3000/about", "about", "v1"],
     ["localhost:3000/how-it-works", "how-it-works", "v1"],
     ["localhost:3000/contact", "contact", "v1"],
     ["localhost:3000/press", "press", "v1"],
     ["localhost:3000/team", "team", "v1"],
-    ["localhost:3000/properties?address=San%20Francisco,%20CA#/sortField=price&minPrice=0&maxPrice=125000.0&minSize=0&maxSize=50000&mapLat=37.773187224778546&mapLng=-122.41041460000002&priceTypeDay=true&priceTypeWeek=true&priceTypeMonth=true&page=1", "properties", "v1"],
-    ["localhost:3000/properties/3927-24th-st-san-francisco-ca-94114-usa", "properties-show", "v1"],
+    ["localhost:3000/error_404", "404", "v0"], 
     ]
         
 resizers = [
@@ -111,12 +118,12 @@ resizers = [
 
 #  ----------------------------------
 
+chrome.active_incognito()
+chrome.close_developer_tools()
+
 for resize, platform, ua_menu, ua_sub in resizers:
     if platform not in platforms_to_fetch:
         continue
-    
-    chrome.active_incognito()
-    chrome.close_developer_tools()
     
     ### hotkey for user agent switcher
     if user_agent_switch:
@@ -124,7 +131,7 @@ for resize, platform, ua_menu, ua_sub in resizers:
         click(ua_menu)
         wait(ua_sub)
         click(ua_sub)
-        chrome.wait_page_load()
+    chrome.wait_page_load()
 
     ### hotkey for window resizer
     type(Key.DOWN, KeyModifier.CMD)
@@ -137,11 +144,15 @@ for resize, platform, ua_menu, ua_sub in resizers:
         chrome.open_developer_tools(orientation="vertical")
         click("1379707470322.png")
 
+    time.sleep(1)
+
     #  ----------------------------------
 
     for url, handle, version in sites:
         chrome.change_url(url)
         saveName = "_".join([handle, platform, version])
-        awesome_screenshot(saveName, "full")
-        awesome_screenshot(saveName, "screen")
+        if "full" in screen_size:
+            awesome_screenshot(saveName, "full")
+        if "screen" in screen_size:
+            awesome_screenshot(saveName, "screen")
  
